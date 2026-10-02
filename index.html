@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صدقة جارية - أذكار وآيات قرآنيّة</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        amiri: ['Amiri', 'serif'],
+                    },
+                    colors: {
+                        primary: {
+                            DEFAULT: '#0f4c3a', // Dark Islamic Green
+                            light: '#1a6b53',
+                            dark: '#0a3628'
+                        },
+                        gold: {
+                            DEFAULT: '#d4af37', // Elegant Gold
+                            light: '#e0c25a',
+                            dark: '#b39127'
+                        },
+                        sand: '#fdfbf7' // Light Beige for background
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #fdfbf7;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230f4c3a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+            scroll-behavior: smooth;
+        }
+        
+        .font-quran {
+            font-family: 'Amiri', serif;
+            line-height: 2.4;
+        }
+
+        /* Animation for clicking counters */
+        .pop-effect {
+            animation: pop 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.9); }
+            100% { transform: scale(1); }
+        }
+
+        /* Toast fade animation */
+        .toast-enter {
+            opacity: 1 !important;
+            transform: translate(-50%, 0) !important;
+        }
+
+        /* Gradient Text */
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-image: linear-gradient(to left, #d4af37, #b39127);
+        }
+
+        .glass-header {
+            background: rgba(15, 76, 58, 0.95);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body class="text-gray-800 antialiased min-h-screen flex flex-col">
+
+    <header class="glass-header sticky top-0 z-50 border-b border-gold/30 shadow-lg transition-all duration-300">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="flex items-center gap-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+                <span class="text-2xl font-bold text-white tracking-wide">صدقة <span class="text-gold">جارية</span></span>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden text-white hover:text-gold focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <!-- Desktop Nav -->
+            <nav class="hidden md:flex gap-6 text-white font-semibold">
+                <a href="#adhkar" class="hover:text-gold transition-colors duration-200">أذكار وأجور</a>
+                <a href="#quran" class="hover:text-gold transition-colors duration-200">آيات بينات</a>
+                <a href="#info" class="hover:text-gold transition-colors duration-200">معلومات مفيدة</a>
+            </nav>
+        </div>
+
+        <!-- Mobile Nav Menu (Hidden by default) -->
+        <nav id="mobile-menu" class="hidden md:hidden bg-primary-dark border-t border-gold/20 flex flex-col px-4 pt-2 pb-4 gap-3 text-white font-semibold">
+            <a href="#adhkar" class="block py-2 hover:text-gold" onclick="toggleMobileMenu()">أذكار وأجور</a>
+            <a href="#quran" class="block py-2 hover:text-gold" onclick="toggleMobileMenu()">آيات بينات</a>
+            <a href="#info" class="block py-2 hover:text-gold" onclick="toggleMobileMenu()">معلومات مفيدة</a>
+        </nav>
+    </header>
+
+    <section class="relative bg-primary overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <!-- Decorative Islamic Mandala SVG -->
+            <svg class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px]" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M50 0L54 38L92 20L62 50L92 80L54 62L50 100L46 62L8 80L38 50L8 20L46 38L50 0Z" fill="#d4af37"/>
+                <circle cx="50" cy="50" r="30" stroke="#d4af37" stroke-width="2"/>
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 py-20 relative z-10 text-center text-white">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-gold drop-shadow-md">صدقة جارية</h1>
+            <p class="text-lg md:text-2xl font-light mb-8 max-w-2xl mx-auto opacity-90 leading-relaxed font-amiri">
+                "الَّذِينَ آمَنُوا وَتَطْمَئِنُّ قُلُوبُهُم بِذِكْرِ اللَّهِ ۗ أَلَا بِذِكْرِ اللَّهِ تَطْمَئِنُّ الْقُلُوبُ"
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center mt-8">
+                <a href="#adhkar" class="bg-gold hover:bg-gold-light text-primary-dark font-bold py-3 px-8 rounded-full shadow-lg transition-transform transform hover:-translate-y-1">
+                    ابدأ الذكر
+                </a>
+                <button onclick="shareSite()" class="bg-transparent border-2 border-gold text-gold hover:bg-gold hover:text-primary-dark font-bold py-3 px-8 rounded-full shadow-lg transition-all duration-300 flex items-center justify-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                    </svg>
+                    شارك كصدقة جارية
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <main class="flex-grow container mx-auto px-4 py-12">
+        
+        <!-- Section: Adhkar -->
+        <section id="adhkar" class="mb-20 scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">أذكار ذات أجور عظيمة</h2>
+                <div class="w-24 h-1 bg-gold mx-auto rounded-full"></div>
+                <p class="mt-4 text-gray-600">اضغط على العداد حتى تكمل العدد المطلوب</p>
+            </div>
+
+            <!-- Adhkar Container for JavaScript injection -->
+            <div id="adhkar-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Adhkar cards will be generated here by JS -->
+            </div>
+        </section>
+
+        <section id="quran" class="mb-20 scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">آيات تطمئن بها القلوب</h2>
+                <div class="w-24 h-1 bg-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Ayah Card 1 -->
+                <div class="bg-white rounded-3xl shadow-md border border-gray-100 p-8 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-gold"></div>
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+                        <span class="bg-primary/10 text-primary p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </span>
+                        آية الكرسي
+                    </h3>
+                    <p class="font-quran text-2xl text-gray-800 text-justify mb-6">
+                        "اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ ۚ لَّهُ مَا فِي السَّمَاوَاتِ وَمَا فِي الْأَرْضِ ۗ مَن ذَا الَّذِي يَشْفَعُ عِندَهُ إِلَّا بِإِذْنِهِ ۚ يَعْلَمُ مَا بَيْنَ أَيْدِيهِمْ وَمَا خَلْفَهُمْ ۖ وَلَا يُحِيطُونَ بِشَيْءٍ مِّنْ عِلْمِهِ إِلَّا بِمَا شَاءَ ۚ وَسِعَ كُرْسِيُّهُ السَّمَاوَاتِ وَالْأَرْضَ ۖ وَلَا يَئُودُهُ حِفْظُهُمَا ۚ وَهُوَ الْعَلِيُّ الْعَظِيمُ"
+                    </p>
+                    <div class="bg-sand p-4 rounded-xl text-primary-dark text-sm border border-gold/20">
+                        <strong>فضلها:</strong> من قرأها دبر كل صلاة مكتوبة لم يمنعه من دخول الجنة إلا أن يموت، ومن قرأها حين يأوي إلى فراشه أجاره الله من الشيطان حتى يصبح.
+                    </div>
+                </div>
+
+                <!-- Ayah Card 2 -->
+                <div class="bg-white rounded-3xl shadow-md border border-gray-100 p-8 relative overflow-hidden group hover:shadow-xl transition-shadow duration-300">
+                    <div class="absolute top-0 right-0 w-2 h-full bg-gold"></div>
+                    <h3 class="text-xl font-bold text-primary mb-4 flex items-center gap-2">
+                        <span class="bg-primary/10 text-primary p-2 rounded-lg">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" /></svg>
+                        </span>
+                        خواتيم سورة البقرة
+                    </h3>
+                    <p class="font-quran text-2xl text-gray-800 text-justify mb-6">
+                        "آمَنَ الرَّسُولُ بِمَا أُنزِلَ إِلَيْهِ مِن رَّبِّهِ وَالْمُؤْمِنُونَ ۚ كُلٌّ آمَنَ بِاللَّهِ وَمَلَائِكَتِهِ وَكُتُبِهِ وَرُسُلِهِ لَا نُفَرِّقُ بَيْنَ أَحَدٍ مِّن رُّسُلِهِ ۚ وَقَالُوا سَمِعْنَا وَأَطَعْنَا ۖ غُفْرَانَكَ رَبَّنَا وَإِلَيْكَ الْمَصِيرُ * لَا يُكَلِّفُ اللَّهُ نَفْسًا إِلَّا وُسْعَهَا..."
+                    </p>
+                    <div class="bg-sand p-4 rounded-xl text-primary-dark text-sm border border-gold/20">
+                        <strong>فضلها:</strong> من قرأ بالآيتين من آخر سورة البقرة في ليلة كفتاه (أي كفتاه من كل سوء ومكروه).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="info" class="mb-20 scroll-mt-24">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-primary mb-3">معلومات إسلامية مفيدة</h2>
+                <div class="w-24 h-1 bg-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Info 1 -->
+                <div class="bg-primary text-white rounded-2xl p-6 shadow-lg relative overflow-hidden">
+                    <div class="absolute -right-10 -bottom-10 opacity-10">
+                        <svg class="w-40 h-40" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 22h20L12 2zm0 4.5l6.5 13h-13L12 6.5z"/></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-gold mb-3 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                        أوقات استجابة الدعاء
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2 text-white/90">
+                        <li>جوف الليل الآخر (الثلث الأخير).</li>
+                        <li>بين الأذان والإقامة.</li>
+                        <li>عند نزول الغيث (المطر).</li>
+                        <li>في السجود (أقرب ما يكون العبد من ربه وهو ساجد).</li>
+                        <li>ساعة من يوم الجمعة (قيل أنها آخر ساعة بعد العصر).</li>
+                    </ul>
+                </div>
+
+                <!-- Info 2 -->
+                <div class="bg-white border-2 border-primary/20 rounded-2xl p-6 shadow-lg">
+                    <h3 class="text-xl font-bold text-primary mb-3 flex items-center gap-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                        ثمرات الاستغفار
+                    </h3>
+                    <ul class="space-y-3 text-gray-700">
+                        <li class="flex items-start gap-2">
+                            <span class="text-gold font-bold">✓</span>
+                            <span>طاعة لله عز وجل وسبب لمغفرة الذنوب.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-gold font-bold">✓</span>
+                            <span>سبب في جلب الرزق ونزول المطر والأموال والبنين.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-gold font-bold">✓</span>
+                            <span>تفريج الكروب والهموم، ودفع البلاء.</span>
+                        </li>
+                        <li class="flex items-start gap-2">
+                            <span class="text-gold font-bold">✓</span>
+                            <span>انشراح الصدر وطمأنينة القلب.</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-primary-dark text-white py-10 mt-auto border-t-4 border-gold">
+        <div class="container mx-auto px-4 text-center">
+            <h4 class="text-2xl font-bold text-gold mb-4">صدقة جارية</h4>
+            <p class="max-w-xl mx-auto text-gray-300 mb-6 leading-relaxed">
+                هذا الموقع صُمم ليكون صدقة جارية. لا تنسونا من صالح دعائكم. الدال على الخير كفاعله، فساهم في نشر هذا الموقع لتنال الأجر بإذن الله.
+            </p>
+            <button onclick="shareSite()" class="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 text-white font-bold py-2 px-6 rounded-full transition-colors border border-white/20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" /></svg>
+                مشاركة الموقع
+            </button>
+            <div class="mt-8 pt-8 border-t border-white/10 text-sm text-gray-400">
+                &copy; <span id="currentYear"></span> جميع الحقوق محفوظة لله تعالى. مسموح بالنسخ والمشاركة للجميع.
+            </div>
+        </div>
+    </footer>
+
+    <div id="toastMessage" class="fixed bottom-10 left-1/2 transform -translate-x-1/2 translate-y-20 opacity-0 bg-primary-dark text-white px-6 py-4 rounded-xl shadow-2xl transition-all duration-300 z-[100] flex items-center gap-3 border border-gold/50 pointer-events-none min-w-[280px] justify-center">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gold" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+        <span id="toastText" class="font-bold text-center">تمت العملية بنجاح!</span>
+    </div>
+
+    <script>
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Mobile Menu Toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+        document.getElementById('mobile-menu-btn').addEventListener('click', toggleMobileMenu);
+
+        // Adhkar Data Source
+        const adhkarData = [
+            {
+                id: 1,
+                text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ، سُبْحَانَ اللَّهِ العَظِيمِ",
+                virtue: "كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن.",
+                target: 100,
+                count: 100
+            },
+            {
+                id: 2,
+                text: "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ، وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",
+                virtue: "من قالها في يوم مائة مرة كانت له عدل عشر رقاب، وكتبت له مائة حسنة، ومحيت عنه مائة سيئة، وكانت له حرزاً من الشيطان.",
+                target: 100,
+                count: 100
+            },
+            {
+                id: 3,
+                text: "أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَهَ إِلَّا هُوَ الْحَيَّ الْقَيُّومَ وَأَتُوبُ إِلَيْهِ",
+                virtue: "من قالها غفر له وإن كان فر من الزحف.",
+                target: 3,
+                count: 3
+            },
+            {
+                id: 4,
+                text: "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ",
+                virtue: "من صلى علي صلاة واحدة، صلى الله عليه بها عشراً.",
+                target: 10,
+                count: 10
+            },
+            {
+                id: 5,
+                text: "لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ",
+                virtue: "كنز من كنوز الجنة.",
+                target: 100,
+                count: 100
+            }
+        ];
+
+        // Render Adhkar Cards
+        const container = document.getElementById('adhkar-container');
+        
+        adhkarData.forEach((dhikr) => {
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-3xl p-6 shadow-[0_4px_20px_-5px_rgba(0,0,0,0.1)] border border-gray-100 flex flex-col justify-between transition-all duration-300 hover:shadow-[0_8px_30px_-5px_rgba(15,76,58,0.15)]";
+            card.innerHTML = `
+                <div>
+                    <h3 class="font-quran text-2xl md:text-3xl text-primary-dark leading-relaxed mb-4 text-center">"${dhikr.text}"</h3>
+                    <div class="bg-primary/5 p-4 rounded-xl mb-6">
+                        <p class="text-gray-700 text-sm leading-relaxed text-center"><strong class="text-primary">فضلها:</strong> ${dhikr.virtue}</p>
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center mt-4">
+                    <button 
+                        id="btn-${dhikr.id}" 
+                        onclick="decrementCounter(${dhikr.id})"
+                        class="w-24 h-24 rounded-full flex flex-col items-center justify-center bg-primary text-white text-3xl font-bold shadow-lg shadow-primary/30 transition-all duration-200 hover:bg-primary-light focus:outline-none select-none relative overflow-hidden group"
+                    >
+                        <span id="count-${dhikr.id}" class="z-10">${dhikr.count}</span>
+                        <span class="text-xs font-normal opacity-80 z-10 mt-1 block group-hover:hidden">مرة</span>
+                        <div class="absolute inset-0 bg-black/10 scale-0 group-active:scale-100 rounded-full transition-transform duration-200"></div>
+                    </button>
+                    <div class="w-full bg-gray-200 rounded-full h-2.5 mt-6 overflow-hidden">
+                        <div id="progress-${dhikr.id}" class="bg-gold h-2.5 rounded-full transition-all duration-300" style="width: 0%"></div>
+                    </div>
+                    <span class="text-xs text-gray-400 mt-2">الهدف: ${dhikr.target}</span>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+
+        // Counter Logic
+        function decrementCounter(id) {
+            const dhikr = adhkarData.find(d => d.id === id);
+            if (!dhikr || dhikr.count <= 0) return;
+
+            dhikr.count--;
+            
+            const btn = document.getElementById(`btn-${id}`);
+            const countDisplay = document.getElementById(`count-${id}`);
+            const progressBar = document.getElementById(`progress-${id}`);
+            
+            // Animation
+            btn.classList.remove('pop-effect');
+            void btn.offsetWidth; // Trigger reflow
+            btn.classList.add('pop-effect');
+
+            // Haptic feedback for mobile
+            if (window.navigator && window.navigator.vibrate) {
+                window.navigator.vibrate(40);
+            }
+
+            // Update Progress Bar
+            const progressPercentage = ((dhikr.target - dhikr.count) / dhikr.target) * 100;
+            progressBar.style.width = `${progressPercentage}%`;
+
+            if (dhikr.count === 0) {
+                // Done state
+                btn.classList.remove('bg-primary', 'hover:bg-primary-light', 'shadow-primary/30');
+                btn.classList.add('bg-gold', 'shadow-gold/40', 'cursor-default');
+                btn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-white z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" /></svg>`;
+                
+                showToast("تقبل الله طاعتكم! 🤍");
+            } else {
+                countDisplay.textContent = dhikr.count;
+            }
+        }
+
+        // Custom Toast Notification instead of alert()
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toastMessage');
+            const toastText = document.getElementById('toastText');
+            
+            toastText.textContent = message;
+            toast.classList.add('toast-enter');
+            
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.remove('toast-enter');
+            }, 3000);
+        }
+
+        // Share API Logic (Works on Mobile and Desktop gracefully)
+        function shareSite() {
+            // Because this might run inside an iframe (like CodePen/Preview), 
+            // we construct a fake beautiful URL or use the origin if it's a real window.
+            let siteUrl = window.location.href;
+            if (siteUrl.includes('blob') || siteUrl.includes('null')) {
+                siteUrl = "https://sadaqah-jariyah.com"; // Fallback URL for visual consistency if in iframe
+            }
+
+            const shareData = {
+                title: 'صدقة جارية - أذكار وآيات قرآنيّة',
+                text: 'أرسل هذا الموقع لمن تحب ليكون لك ولهم صدقة جارية، فيه أذكار وآيات تطمئن بها القلوب.',
+                url: siteUrl
+            };
+
+            // Check if Web Share API is supported (Mobile/Modern browsers)
+            if (navigator.share && /mobile|android|iphone|ipad/i.test(navigator.userAgent)) {
+                navigator.share(shareData)
+                    .then(() => console.log('Shared successfully'))
+                    .catch((err) => {
+                        console.error('Share error:', err);
+                        fallbackCopyTextToClipboard(shareData.url);
+                    });
+            } else {
+                // Fallback for PCs or unsupported browsers
+                fallbackCopyTextToClipboard(shareData.url);
+            }
+        }
+
+        function fallbackCopyTextToClipboard(text) {
+            const textArea = document.createElement("textarea");
+            textArea.value = text;
+            // Prevent scrolling to bottom of page in MS Edge.
+            textArea.style.top = "0";
+            textArea.style.left = "0";
+            textArea.style.position = "fixed";
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+
+            try {
+                const successful = document.execCommand('copy');
+                if(successful) {
+                    showToast('تم نسخ الرابط بنجاح! شاركه الآن ليكون صدقة جارية.');
+                } else {
+                    showToast('لم نتمكن من نسخ الرابط تلقائياً.');
+                }
+            } catch (err) {
+                console.error('Fallback: Oops, unable to copy', err);
+            }
+            document.body.removeChild(textArea);
+        }
+    </script>
+</body>
+</html>
